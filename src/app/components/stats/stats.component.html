@@ -1,0 +1,123 @@
+<div class="content">
+<app-header></app-header>
+
+<div class="welcome">
+    <p>Buenos días, ha iniciado usted sesión como <strong>{{user}}</strong></p>
+</div>
+
+<div class="busq">
+    <fieldset class="filtros">
+        <legend><strong>Filtrar tareas por técnico</strong></legend>
+        
+        <mat-form-field appearance="outline">
+            <mat-select [formControl]="selection" (selectionChange)="buscar()">
+                <mat-option value="todos" selected>Todos</mat-option>
+                <mat-option *ngFor="let item of listaTecnicos" [value]="item._id">{{item.nombre}} {{item.apellidos}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+    </fieldset>
+
+    <fieldset class="filtros">
+        <legend><strong>Filtrar tareas por año</strong></legend>
+        
+        <mat-form-field appearance="outline">
+            <mat-select [formControl]="selectionYear" (selectionChange)="buscar()">
+                <mat-option value="todos" selected>Todos</mat-option>
+                <mat-option *ngFor="let item of listaYear" [value]="item">{{item}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+    </fieldset>
+
+    <fieldset class="filtros">
+        <legend><strong>Filtrar tareas por mes</strong></legend>
+        
+        <mat-form-field appearance="outline">
+            <mat-select [formControl]="selectionMonth" (selectionChange)="buscar()">
+                <mat-option value="todos" selected>Todos</mat-option>
+                <mat-option *ngFor="let item of listaMeses" [value]="item._id">{{item.mes}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+    </fieldset>
+</div>
+
+<div>
+    <fieldset class="funcionalidad">
+        <legend><strong>Acciones</strong></legend>
+
+        <button mat-button color="warn" (click)="reset()">Resetear filtros</button>
+
+    </fieldset>
+</div>
+
+<div>
+    <fieldset class="funcionalidad">
+        <legend><strong>Información</strong></legend>
+
+        <p *ngIf="noHayDatos">
+            No se han encontrado registros con esos parámetros de búsqueda.
+        </p>
+
+        <ng-container *ngIf="!filtrado && !noHayDatos">
+            <p>Actualmente la empresa tiene en activo un total de <strong>{{countTecnicos}}</strong> técnicos.</p>
+            <p>Hasta la fecha la empresa ha completado <strong>{{countTareas}}</strong> tareas con éxito.</p>
+            <p>El importe total facturado por estas tareas asciende a <strong>{{importe | currency: 'EUR':'symbol':undefined:'fr'}}</strong>.</p>
+
+        </ng-container>
+
+        <ng-container *ngIf="filtrado && !noHayDatos">
+            <p>Con los parámetros de búsqueda actuales la cantidad total de tareas realizadas con éxito es <strong>{{totalTareas}}.</strong></p>
+            <p>El importe total facturado por estas tareas asciende a <strong>{{totalImporte | currency: 'EUR':'symbol':undefined:'fr'}}</strong>.</p>
+        </ng-container>
+
+    </fieldset>
+</div>
+
+<div class="tabla">
+    
+    <table matSort mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="tecnico">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Técnico </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.tecnico}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.fecha | date: 'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="cliente">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="responsive"> Cliente </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="responsive"> {{element.cliente}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="facturable">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="responsive"> Facturable </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="responsive"> {{element.facturable}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="importe">
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="responsive"> Importe </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="responsive"> {{element.importe | currency: 'EUR':'symbol':undefined:'fr'}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+    
+    <div class="espacio">
+        <mat-paginator #paginator [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5,10]" showFirstLastButtons></mat-paginator>
+    </div>
+
+</div>
+
+<app-footer></app-footer>
+</div>

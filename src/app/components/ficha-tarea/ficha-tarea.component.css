@@ -1,0 +1,43 @@
+.content {
+    background: rgb(230, 233, 226);
+    margin: 0;
+    padding: 0;
+}
+
+fieldset {
+    border-radius: 10px;
+    margin: 1vw 2vw;
+    padding: 1vw;
+}
+
+.welcome {
+    margin-bottom: 1vw;
+    margin-top: 2vw;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+legend {
+    font-weight: bold;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-self: center;
+    justify-self: center;
+}
+
+.btns {
+    display: flex;
+    gap: 1vw;
+}
+
+@media (max-width: 650px){
+    .welcome{
+        text-align: center;
+    }
+}

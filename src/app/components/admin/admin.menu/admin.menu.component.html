@@ -1,0 +1,37 @@
+
+<div class="content">
+<app-header></app-header>
+
+<div class="welcome">
+    <p>Buenos días, ha iniciado usted sesión como <strong>{{user}}</strong></p>
+</div>
+
+<div>
+    <fieldset class="info">
+        <legend><strong>Información rápida</strong></legend>
+
+        <p>Actualmente la empresa tiene en activo un total de <strong>{{countTecnicos}}</strong> técnicos.</p>
+        <p>Hasta la fecha la empresa ha completado <strong>{{countTareas}}</strong> tareas con éxito.</p>
+        <p>El importe total facturado por estas tareas asciende a <strong>{{importe | currency: 'EUR':'symbol':undefined:'fr'}}</strong>.</p>
+
+    </fieldset>
+</div>
+
+<div>
+    <fieldset class="funcionalidad">
+        <legend><strong>Acciones</strong></legend>
+
+        <div class="card" *ngFor="let item of acciones" (click)="redirecting(item)">
+            <img src="../../../../assets/otros/{{item.foto}}" alt="imagen">
+
+            <div class="infoCard">
+                <p><strong>{{item.titulo}}</strong></p>
+                <p>{{item.descripcion}}</p>
+            </div>
+        </div>
+
+    </fieldset>
+</div>
+
+<app-footer></app-footer>
+</div>

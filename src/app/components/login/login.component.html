@@ -1,0 +1,41 @@
+<div class="content">
+    <div class="nav">
+        <img src="../../../assets/logo.png" alt="logo">
+    </div>
+
+    <h1>Inicio de sesión</h1>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-form-field appearance="outline">
+            <mat-label>Usuario:</mat-label>
+            <input type="text" id="usuario" formControlName="usuario" matInput placeholder="Introduzca usuario" required autofocus>
+            <mat-error *ngIf="loginForm.get('usuario')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Contraseña:</mat-label>
+            <input [type]="hide ? 'password' : 'text'" id="password" formControlName="password" matInput placeholder="*********" required>
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>    
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" [disabled]="loginForm.invalid" type="submit">Enviar</button>
+        <button mat-stroked-button color="warn"  type="reset">Cancelar</button>
+    </form>
+
+    <ng-container>
+        <mat-error class="customErr" *ngIf="usuarioError">
+            * El <strong>usuario</strong> no es correcto
+        </mat-error>
+        <mat-error class="customErr" *ngIf="passwordError">
+            * La <strong>contraseña</strong> no es correcta
+        </mat-error>
+    </ng-container>
+
+</div>

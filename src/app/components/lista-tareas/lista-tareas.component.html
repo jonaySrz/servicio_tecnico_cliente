@@ -1,0 +1,89 @@
+<div class="content">
+    <app-header></app-header>
+    
+    <div class="welcome">
+        <p>Buenos días, ha iniciado usted sesión como <strong *ngIf="user == 'tecnico'">técnico</strong><strong *ngIf="user !== 'tecnico'">{{user}}</strong></p>
+    </div>
+    
+    <div>
+        <fieldset class="funcionalidad">
+            <legend><strong>Acciones</strong></legend>
+    
+            <button mat-button color="primary" (click)="nuevo()">Crear nueva tarea</button>
+            <button mat-button color="warn" (click)="reset()" *ngIf="!tecnico">Resetear filtros</button>
+    
+        </fieldset>
+    </div>
+    
+    <div class="busq" *ngIf="!tecnico">
+        <fieldset class="filtros">
+            <legend><strong>Filtrar tareas por técnico</strong></legend>
+            
+            <mat-form-field appearance="outline">
+                <mat-select [formControl]="selection" (selectionChange)="filtro($event.value)">
+                    <mat-option value="todos" selected>Todos</mat-option>
+                    <mat-option *ngFor="let item of listaTecnicos" [value]="item._id">{{item.nombre}} {{item.apellidos}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+        </fieldset>
+
+        <fieldset class="filtros">
+            <legend><strong>Filtrar tareas por cliente</strong></legend>
+            
+            <mat-form-field appearance="outline">
+                <mat-select [formControl]="selectionClientes" (selectionChange)="filtroCliente($event.value)">
+                    <mat-option value="todos" selected>Todos</mat-option>
+                    <mat-option *ngFor="let item of listaClientes" [value]="item">{{item}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+        </fieldset>
+    </div>
+    
+    <div class="tabla">
+    
+        <table matSort mat-table [dataSource]="dataSource">
+    
+            <ng-container matColumnDef="tecnico">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Técnico </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.tecnico}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="fecha">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="responsive"> Fecha </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="responsive"> {{element.fecha | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="cliente">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.cliente}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="descripcion">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="facturable">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="responsive"> Facturable </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="responsive"> {{element.facturable}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="importe">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="responsive"> Importe </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="responsive"> {{element.importe | currency: 'EUR':'symbol':undefined:'fr'}} </mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editar(row)"></mat-row>
+        </table>
+        
+        <div class="espacio">
+            <mat-paginator #paginator [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5,10]" showFirstLastButtons></mat-paginator>
+        </div>
+    
+    </div>
+    
+    <app-footer></app-footer>
+    </div>

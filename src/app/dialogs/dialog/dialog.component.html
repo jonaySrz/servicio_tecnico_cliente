@@ -1,0 +1,44 @@
+<div class="card">
+        <mat-dialog-content class="mat-typography" *ngIf="nuevo">
+            <p>El registro <strong>{{data.name}}</strong> ha sido guardado correctamente</p>
+        </mat-dialog-content>
+
+        <mat-dialog-content class="mat-typography" *ngIf="edit">
+            <p>El registro <strong>{{data.name}}</strong> ha sido modificado correctamente</p>
+        </mat-dialog-content>
+
+        <mat-dialog-content class="mat-typography" *ngIf="finTrue">
+            <p>El contrato de <strong>{{data.name}}</strong> ha sido finalizado con éxito</p>
+        </mat-dialog-content>
+
+        <mat-dialog-content class="mat-typography" *ngIf="reactivarTrue">
+            <p>El contrato de <strong>{{data.name}}</strong> ha sido reactivado con éxito</p>
+        </mat-dialog-content>
+
+        <mat-dialog-content class="mat-typography" *ngIf="borrarTrue">
+            <p>El registro <strong>{{data.name}}</strong> ha sido borrado con éxito</p>
+        </mat-dialog-content>
+
+        <mat-dialog-content class="mat-typography" *ngIf="error">
+            <h1><strong>Error</strong></h1>
+            <p>Lo sentimos, algo ha ido mal</p>
+            <p>Por favor, intentelo de nuevo</p>
+        </mat-dialog-content>
+
+        <mat-dialog-content class="mat-typography" *ngIf="fin">
+            <p>¿Esta seguro que desea finalizar el contrato del empleado: <strong>{{data.name}}</strong>?</p>
+        </mat-dialog-content>
+
+        <mat-dialog-content class="mat-typography" *ngIf="borrar">
+            <p>¿Esta seguro que desea borrar la tarea: <strong>{{data.name}}</strong>?</p>
+        </mat-dialog-content>
+
+        <mat-dialog-content class="mat-typography" *ngIf="reactivar">
+            <p>¿Esta seguro que desea reactivar el contrato del empleado: <strong>{{data.name}}</strong>?</p>
+        </mat-dialog-content>
+
+        <mat-dialog-actions align="center">
+            <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Aceptar</button>
+            <button *ngIf="fin || borrar || reactivar" mat-button color="warn" [mat-dialog-close]="false">Cancelar</button>
+        </mat-dialog-actions>
+</div>

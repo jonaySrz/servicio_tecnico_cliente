@@ -1,0 +1,40 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: rgb(241,241,241);
+    background: radial-gradient(circle, rgba(241,241,241,1) 0%, rgba(175,174,174,1) 100%);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.customErr{
+    margin-top: 1.5vw;
+}
+
+button {
+    margin-top: 3px;
+}
+
+.nav {
+    margin-bottom: 3vw;
+}
+
+.nav img {
+    height: 15vh;
+    width: auto;
+}
+
+mat-icon {
+    color: rgb(68, 68, 68);
+}
+
+h1 {
+    color: rgb(53, 53, 53);
+}

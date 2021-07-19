@@ -1,0 +1,106 @@
+<div class="content">
+    <app-header></app-header>
+    
+    <div class="welcome">
+        <p>Buenos días, ha iniciado usted sesión como <strong *ngIf="user == 'tecnico'">técnico</strong><strong *ngIf="user !== 'tecnico'">{{user}}</strong></p>    </div>
+    
+    <div class="acciones">
+        <fieldset>
+            <legend>Acciones</legend>
+    
+            <button mat-button color="primary" (click)="atras()">Volver atrás</button>
+            <button *ngIf="!nuevo && !tecnico" mat-button color="warn" (click)="borrar()">Borrar tarea</button>
+        </fieldset>
+    </div>
+    
+    
+    <fieldset>
+        <legend>
+            <ng-container *ngIf="nuevo; else editing">
+                Nueva tarea
+            </ng-container>
+            <ng-template #editing >
+                {{tarea.descripcion}}
+            </ng-template>
+        </legend>
+        <form [formGroup]="tareaForm" (ngSubmit)="guardar()">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Técnico:</mat-label>
+
+                <ng-container *ngIf="tecnico;else admini">
+                    <input type="text" formControlName="tecnico" matInput placeholder="Introduzca técnico" readonly>
+                </ng-container>
+
+                <ng-template #admini>
+                    <mat-select formControlName="tecnico">
+                        <mat-option *ngFor="let item of listaTecnicos" [value]="item._id">{{item.nombre}} {{item.apellidos}}</mat-option>
+                    </mat-select>
+                </ng-template>
+                
+
+                <mat-error *ngIf="tareaForm.get('tecnico')?.hasError('required')">
+                    Este campo es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-label>Fecha:</mat-label>
+                <input type="date" formControlName="fecha" matInput placeholder="Introduzca fecha" required>
+                <mat-error *ngIf="tareaForm.get('fecha')?.hasError('required')">
+                    Este campo es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-label>Cliente:</mat-label>
+                <input list="listaDeClientes" formControlName="cliente" matInput placeholder="Introduzca cliente" required>
+                <mat-error *ngIf="tareaForm.get('cliente')?.hasError('required')">
+                    Este campo es <strong>obligatorio</strong>
+                </mat-error>    
+            </mat-form-field>
+
+            <datalist id="listaDeClientes">
+                <option *ngFor="let item of listaClientes" value="{{item}}">{{item}}</option>
+            </datalist>
+    
+            <mat-form-field appearance="outline">
+                <mat-label>Descripción:</mat-label>
+                <input type="text" formControlName="descripcion" matInput placeholder="Introduzca descripción" required>
+                <mat-error *ngIf="tareaForm.get('descripcion')?.hasError('required')">
+                    Este campo es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-label>Facturable:</mat-label>
+
+                <mat-select formControlName="facturable" [(value)]="factura">
+                    <mat-option value="true">Si</mat-option>
+                    <mat-option value="false">No</mat-option>
+                </mat-select>
+                
+                <mat-error *ngIf="tareaForm.get('facturable')?.hasError('required')">
+                    Este campo es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-label>Importe:</mat-label>
+                <input type="number" formControlName="importe" matInput placeholder="Introduzca importe" required>
+                <mat-error *ngIf="tareaForm.get('importe')?.hasError('required')">
+                    Este campo es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+    
+            <div class="btns">
+                <button mat-stroked-button color="primary" [disabled]="tareaForm.invalid" type="submit">Enviar</button>
+                <button mat-stroked-button color="warn"  type="button" (click)="reset()">Borrar</button>
+            </div>
+        </form>
+    
+    </fieldset>
+    
+    
+    <app-footer></app-footer>
+    </div>

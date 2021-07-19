@@ -1,0 +1,65 @@
+fieldset {
+    border-radius: 10px;
+    margin: 1vw 2vw;
+    padding: 1vw;
+}
+
+.welcome {
+    margin-bottom: 1vw;
+    margin-top: 2vw;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.card img {
+    height: 13vh;
+    width: auto;
+    border-radius: 15px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    gap: 3vw;
+    margin: 3vh 0;
+    background-color:rgba(0, 139, 139, 0.562);
+    border-radius: 15px;
+    transition: .3s;
+    width: 90%;
+    cursor: pointer;
+    box-shadow: 1px 2px 5px grey;
+}
+
+.card:hover {
+    transform: translateX(15px);
+    box-shadow: 3px 4px 7px grey;
+}
+
+.funcionalidad {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.content {
+    background: rgb(230, 233, 226);
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 650px){
+    .welcome{
+        text-align: center;
+    }
+
+    .card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .funcionalidad {
+        align-items: center;
+    }
+}

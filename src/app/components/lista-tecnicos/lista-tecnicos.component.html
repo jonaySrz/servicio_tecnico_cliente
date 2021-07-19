@@ -1,0 +1,72 @@
+<div class="content">
+<app-header></app-header>
+
+<div class="welcome">
+    <p>Buenos días, ha iniciado usted sesión como <strong>{{user}}</strong></p>
+</div>
+
+<div>
+    <fieldset class="funcionalidad">
+        <legend><strong>Acciones</strong></legend>
+
+        <button mat-button color="primary" (click)="nuevo()">Crear nuevo empleado</button>
+
+    </fieldset>
+</div>
+
+<div>
+    <fieldset class="filtros">
+        <legend><strong>Listar empleados</strong></legend>
+
+        <mat-button-toggle-group value="todos">
+
+            <mat-button-toggle id="todos" value="todos" class="btnsT" (click)="filtro($event)" id="todos">Todos</mat-button-toggle>
+            <mat-button-toggle id="activos" value="activos" class="btnsT" (click)="filtro($event)">Activos</mat-button-toggle>
+            <mat-button-toggle id="noActivos" value="noActivos" class="btnsT" (click)="filtro($event)">No activos</mat-button-toggle>
+
+        </mat-button-toggle-group>
+
+    </fieldset>
+</div>
+
+<div class="tabla">
+
+    <table matSort mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="apellidos">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.apellidos}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="telefono">
+            <mat-header-cell *matHeaderCellDef  class="responsive"> Teléfono </mat-header-cell>
+            <mat-cell *matCellDef="let element"  class="responsive"> {{element.telefono}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_inicio">
+            <mat-header-cell *matHeaderCellDef> Inicio de contrato </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.fecha_inicio | date: 'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha_fin">
+            <mat-header-cell *matHeaderCellDef> Fin de contrato </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.fecha_fin | date: 'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editar(row)"></mat-row>
+    </table>
+    
+    <div class="espacio">
+        <mat-paginator #paginator [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5,10]" showFirstLastButtons></mat-paginator>
+    </div>
+
+</div>
+
+<app-footer></app-footer>
+</div>

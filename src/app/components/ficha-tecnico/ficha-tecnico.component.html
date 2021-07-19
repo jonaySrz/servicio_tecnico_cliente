@@ -1,0 +1,103 @@
+<div class="content">
+<app-header></app-header>
+
+<div class="welcome">
+    <p>Buenos días, ha iniciado usted sesión como <strong>{{user}}</strong></p>
+</div>
+
+<div class="acciones">
+    <fieldset>
+        <legend>Acciones</legend>
+
+        <button mat-button color="primary" (click)="atras()">Volver atrás</button>
+        <button *ngIf="!nuevo && !despedido" mat-button color="warn" (click)="finalizar()">Finalizar contrato</button>
+        <button class="green" *ngIf="!nuevo && despedido" mat-button color="accent" (click)="reactivar()">Reactivar contrato</button>
+    </fieldset>
+</div>
+
+
+<fieldset>
+    <legend>
+        <ng-container *ngIf="nuevo; else editing">
+            Nuevo empleado
+        </ng-container>
+        <ng-template #editing >
+            {{empleado.nombre}}, {{empleado.apellidos}}
+        </ng-template>
+    </legend>
+    <form [formGroup]="tecnicoForm" (ngSubmit)="guardar()">
+        <mat-form-field appearance="outline">
+            <mat-label>Id:</mat-label>
+            <input type="text" formControlName="_id" matInput readonly>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Usuario:</mat-label>
+            <input type="text" id="usuario" formControlName="usuario" matInput placeholder="Introduzca usuario" required autofocus>
+            <mat-error *ngIf="tecnicoForm.get('usuario')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Contraseña:</mat-label>
+            <input [type]="hide ? 'password' : 'text'" id="password" formControlName="password" matInput placeholder="*********" required>
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="tecnicoForm.get('password')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>    
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre:</mat-label>
+            <input type="text" formControlName="nombre" matInput placeholder="Introduzca nombre" required>
+            <mat-error *ngIf="tecnicoForm.get('nombre')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Apellidos:</mat-label>
+            <input type="text" formControlName="apellidos" matInput placeholder="Introduzca apellidos" required>
+            <mat-error *ngIf="tecnicoForm.get('apellidos')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Teléfono:</mat-label>
+            <input type="tel" formControlName="telefono" matInput placeholder="Introduzca telefono" required>
+            <mat-error *ngIf="tecnicoForm.get('telefono')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Fecha de inicio:</mat-label>
+            <input type="date" formControlName="fecha_inicio" matInput placeholder="Introduzca una fecha" required>
+            <mat-error *ngIf="tecnicoForm.get('fecha_inicio')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="fin">
+            <mat-label>Fecha de fin:</mat-label>
+            <input type="date" formControlName="fecha_fin" matInput placeholder="Introduzca una fecha">
+            <mat-error *ngIf="tecnicoForm.get('fecha_fin')?.hasError('required')">
+                Este campo es <strong>obligatorio</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <div class="btns">
+            <button mat-stroked-button color="primary" [disabled]="tecnicoForm.invalid" type="submit">Enviar</button>
+            <button mat-stroked-button color="warn"  type="button" (click)="reset()">Borrar</button>
+        </div>
+    </form>
+
+</fieldset>
+
+
+<app-footer></app-footer>
+</div>
